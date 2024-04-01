@@ -6,5 +6,8 @@ data class MovieListState(
     val isLoading: Boolean = false,
     val movieList: MovieList? = null,
     val error: String = "",
-    val previousPage: Int = 0
+    val page: Int = 1,
+    val searchText: String = "",
+    val endReached: Boolean = false,
+    val isSearching: Boolean = false
 )

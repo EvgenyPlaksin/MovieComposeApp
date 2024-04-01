@@ -1,16 +1,13 @@
 package com.lnight.moviecomposeapp.movie_list.presentation
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lnight.moviecomposeapp.common.Resource
-import com.lnight.moviecomposeapp.movie_list.domain.model.MovieList
+import com.lnight.moviecomposeapp.movie_list.domain.DefaultPaginator
 import com.lnight.moviecomposeapp.movie_list.domain.use_case.MovieListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,39 +18,85 @@ class MovieListViewModel @Inject constructor(
     private val _state = mutableStateOf(MovieListState())
     val state: State<MovieListState> = _state
 
-    init {
-        getMovieList(state.value.previousPage + 1)
-    }
-
-    private fun getMovieList(page: Int = 1) {
-        movieListUseCase(page).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    if (result.data != null) {
-                        _state.value = state.value.copy(
-                            previousPage = page
-                        )
-                            _state.value = state.value.copy(
-                                movieList = result.data,
-                                isLoading = false
-                            )
-                    }
-                }
-                is Resource.Loading -> {
-                    if(_state.value.movieList == null) {
-                        _state.value = state.value.copy(
-                            isLoading = true
-                        )
-                    }
-                }
-                is Resource.Error -> {
+    private val paginator = DefaultPaginator(
+        initialKey = state.value.page,
+        onLoadUpdated = {
+            _state.value = state.value.copy(
+                isLoading = it
+            )
+        },
+        onRequest = { nextPage ->
+            movieListUseCase(nextPage)
+        },
+        getNextKey = {
+            state.value.page + 1
+        },
+        onError = {
+            _state.value = state.value.copy(
+                error = it.message ?: "Unknown error occurred"
+            )
+        },
+        onSuccess = { items, newKey ->
+            if(items.data != null) {
+                if(state.value.movieList != null) {
+                    val newList = state.value.movieList!!.copy(
+                        results = state.value.movieList!!.results + items.data.results,
+                        totalPages = items.data.totalPages,
+                    )
                     _state.value = state.value.copy(
-                        isLoading = false,
-                        error = result.message ?: "Unknown error occurred"
+                        movieList = newList,
+                        page = newKey,
+                        endReached = items.data.results.isEmpty()
+                    )
+                } else {
+                    _state.value = state.value.copy(
+                        movieList = items.data,
+                        page = newKey,
+                        endReached = items.data.results.isEmpty()
                     )
                 }
-
             }
-        }.launchIn(viewModelScope)
+        }
+    )
+
+    init {
+        getMovieList()
+    }
+
+     fun getMovieList() {
+        if(state.value.isSearching) return
+        viewModelScope.launch {
+            paginator.loadNextItems()
+        }
+    }
+
+    fun search(query: String) {
+        _state.value = state.value.copy(
+            isSearching = true
+        )
+        val movieList = _state.value.movieList
+        if(!movieList?.results.isNullOrEmpty()) {
+            _state.value = state.value.copy(
+                movieList = movieList?.copy(
+                    results = movieList.results.filter { it.title.contains(query, ignoreCase = true) }
+                )
+            )
+        }
+    }
+
+    fun onInputText(text: String) {
+        if(text.isBlank()) {
+            _state.value = state.value.copy(
+                isSearching = false
+            )
+            paginator.reset()
+            _state.value = state.value.copy(
+                movieList = null
+            )
+            getMovieList()
+        }
+        _state.value = state.value.copy(
+            searchText = text
+        )
     }
 }
