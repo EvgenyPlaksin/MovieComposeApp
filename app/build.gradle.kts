@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("org.jetbrains.kotlin.plugin.serialization")
+
 }
 
 android {
@@ -98,4 +100,7 @@ dependencies {
     // Retrofit2
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
+
+    // Kotlix Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

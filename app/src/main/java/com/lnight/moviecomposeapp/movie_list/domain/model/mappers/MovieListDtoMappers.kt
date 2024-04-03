@@ -9,7 +9,7 @@ import com.lnight.moviecomposeapp.movie_list.domain.model.MovieList
 fun MovieListDto.toMovieList(): MovieList {
     return MovieList(
         page = page,
-        results = results.map { it.toMovie() },
+        results = results.map { it.toMovie() }.toSet(),
         totalPages = total_pages
     )
 }

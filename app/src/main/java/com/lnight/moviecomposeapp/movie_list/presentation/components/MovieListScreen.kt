@@ -55,7 +55,7 @@ fun MovieListScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 state.movieList?.let { movieList ->
-                    items(movieList.results) { movie ->
+                    items(movieList.results.toList()) { movie ->
                         if(movie.id == movieList.results.last().id && !state.endReached && !state.isLoading) {
                             viewModel.getMovieList()
                         }
