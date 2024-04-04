@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.lnight.moviecomposeapp.common.RetrySection
 import com.lnight.moviecomposeapp.common.Screen
 import com.lnight.moviecomposeapp.movie_list.presentation.MovieListViewModel
 
@@ -28,14 +29,26 @@ fun MovieListScreen(
     val viewModel: MovieListViewModel = hiltViewModel()
     val state by viewModel.state
 
-    if(state.isLoading && state.movieList?.results.isNullOrEmpty()) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+    if (state.isLoading && state.movieList?.results.isNullOrEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
             CircularProgressIndicator()
         }
-    }
+    } else if (!state.isLoading && state.error.isNotBlank() && state.movieList?.results.isNullOrEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            RetrySection(
+                text = state.error,
+                onClick = {
+                    viewModel.getMovieList()
+                }
+            )
+        }
+    } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -57,7 +70,7 @@ fun MovieListScreen(
             ) {
                 state.movieList?.let { movieList ->
                     items(movieList.results.toList()) { movie ->
-                        if(movie.id == movieList.results.last().id && !state.endReached && !state.isLoading) {
+                        if (movie.id == movieList.results.last().id && !state.endReached && !state.isLoading) {
                             viewModel.getMovieList()
                         }
                         MovieListItem(movie = movie) {
@@ -65,7 +78,7 @@ fun MovieListScreen(
                         }
                     }
                 }
-                if(state.isLoading && !state.movieList?.results.isNullOrEmpty()) {
+                if (state.isLoading && !state.movieList?.results.isNullOrEmpty()) {
                     item {
                         Row(
                             modifier = Modifier.fillMaxSize(),
@@ -77,4 +90,5 @@ fun MovieListScreen(
                 }
             }
         }
+    }
 }

@@ -20,7 +20,6 @@ fun MovieDto.toMovie(): Movie {
         isAdult = adult,
         title = title,
         releaseDate = release_date,
-        posterPath = BASE_IMAGE_URL + poster_path,
-        overview = overview
+        posterPath = BASE_IMAGE_URL + poster_path
     )
 }

@@ -8,6 +8,5 @@ data class Movie(
     val isAdult: Boolean,
     val title: String,
     val releaseDate: String,
-    val posterPath: String,
-    val overview: String,
+    val posterPath: String
 )

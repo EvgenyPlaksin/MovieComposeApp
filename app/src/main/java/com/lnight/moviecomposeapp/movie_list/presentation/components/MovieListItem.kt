@@ -88,8 +88,7 @@ private fun MovieListItemPreview() {
             isAdult = false,
             title = "Godzilla x Kong: The New Empire",
             releaseDate = "2024-03-27",
-            posterPath = "https://image.tmdb.org/t/p/original/gmGK5Gw5CIGMPhOmTO0bNA9Q66c.jpg",
-            overview = "Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own."
+            posterPath = "https://image.tmdb.org/t/p/original/gmGK5Gw5CIGMPhOmTO0bNA9Q66c.jpg"
         )
     ) {
 
