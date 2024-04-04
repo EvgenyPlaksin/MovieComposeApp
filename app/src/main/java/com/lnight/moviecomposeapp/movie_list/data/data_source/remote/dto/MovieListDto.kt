@@ -1,4 +1,4 @@
-package com.lnight.moviecomposeapp.movie_list.data.data_sourse.remote.dto
+package com.lnight.moviecomposeapp.movie_list.data.data_source.remote.dto
 
 data class MovieListDto(
     val page: Int,

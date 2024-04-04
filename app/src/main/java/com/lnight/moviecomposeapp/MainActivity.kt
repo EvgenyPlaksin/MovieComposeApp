@@ -11,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.lnight.moviecomposeapp.common.Screen
+import com.lnight.moviecomposeapp.movie_details.presentation.components.MovieDetailsScreen
 import com.lnight.moviecomposeapp.movie_list.presentation.components.MovieListScreen
 import com.lnight.moviecomposeapp.ui.theme.MovieComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,9 +45,17 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(
-                            route = Screen.DetailScreen.route
+                            route = Screen.DetailScreen.route + "/{movie_id}",
+                            arguments = listOf(
+                                navArgument("movie_id") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                }
+                            )
                         ) {
-                           // TODO
+                            MovieDetailsScreen(
+                                isCompactScreen = windowInfo.screenWidthInfo is WindowInfo.WindowType.Compact
+                            )
                         }
                     }
 

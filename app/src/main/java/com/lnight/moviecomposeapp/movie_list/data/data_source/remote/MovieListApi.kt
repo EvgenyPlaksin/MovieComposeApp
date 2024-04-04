@@ -1,12 +1,12 @@
-package com.lnight.moviecomposeapp.movie_list.data.data_sourse.remote
+package com.lnight.moviecomposeapp.movie_list.data.data_source.remote
 
-import com.lnight.moviecomposeapp.movie_list.data.data_sourse.remote.dto.MovieListDto
+import com.lnight.moviecomposeapp.movie_list.data.data_source.remote.dto.MovieListDto
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-interface MoviesApi {
+interface MovieListApi {
 
     @Headers("Accept: application/json")
     @GET("discover/movie")

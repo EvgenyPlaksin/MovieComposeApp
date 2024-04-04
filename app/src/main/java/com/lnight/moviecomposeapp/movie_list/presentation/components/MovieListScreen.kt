@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.lnight.moviecomposeapp.common.Screen
 import com.lnight.moviecomposeapp.movie_list.presentation.MovieListViewModel
 
 @Composable
@@ -60,7 +61,7 @@ fun MovieListScreen(
                             viewModel.getMovieList()
                         }
                         MovieListItem(movie = movie) {
-                            // TODO Navigate
+                            navController.navigate(Screen.DetailScreen.route + "/${movie.id}")
                         }
                     }
                 }

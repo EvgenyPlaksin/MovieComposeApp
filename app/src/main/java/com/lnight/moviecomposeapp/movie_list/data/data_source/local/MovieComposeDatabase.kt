@@ -1,4 +1,4 @@
-package com.lnight.moviecomposeapp.movie_list.data.data_sourse.local
+package com.lnight.moviecomposeapp.movie_list.data.data_source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

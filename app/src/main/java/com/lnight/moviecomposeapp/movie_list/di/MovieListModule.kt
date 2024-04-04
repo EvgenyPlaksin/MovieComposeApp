@@ -1,10 +1,11 @@
-package com.lnight.moviecomposeapp.di
+package com.lnight.moviecomposeapp.movie_list.di
 
 import android.app.Application
 import androidx.room.Room
-import com.lnight.moviecomposeapp.movie_list.data.data_sourse.local.MovieComposeDao
-import com.lnight.moviecomposeapp.movie_list.data.data_sourse.local.MovieComposeDatabase
-import com.lnight.moviecomposeapp.movie_list.data.data_sourse.remote.MoviesApi
+import com.lnight.moviecomposeapp.common.Constants.BASE_URL
+import com.lnight.moviecomposeapp.movie_list.data.data_source.local.MovieComposeDao
+import com.lnight.moviecomposeapp.movie_list.data.data_source.local.MovieComposeDatabase
+import com.lnight.moviecomposeapp.movie_list.data.data_source.remote.MovieListApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,17 +16,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
+object MovieListModule {
 
     @Provides
     @Singleton
-    fun provideMoviesApi(): MoviesApi {
+    fun provideMoviesApi(): MovieListApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-            .create(MoviesApi::class.java)
+            .create(MovieListApi::class.java)
     }
 
     @Provides
