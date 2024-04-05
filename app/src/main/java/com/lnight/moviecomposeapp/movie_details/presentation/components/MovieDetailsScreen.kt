@@ -1,13 +1,16 @@
 package com.lnight.moviecomposeapp.movie_details.presentation.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.moviecomposeapp.common.RetrySection
 import com.lnight.moviecomposeapp.movie_details.presentation.MovieDetailsViewModel
@@ -39,12 +42,16 @@ fun MovieDetailsScreen(
             )
         }
     } else {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                text = state.movieDetails.toString()
+            MoviePoster(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(350.dp),
+                posterPath = state.movieDetails?.posterPath ?: "",
+                backgroundImagePath = state.movieDetails?.backgroundImagePath ?: "",
+                name = state.movieDetails?.title ?: ""
             )
         }
     }

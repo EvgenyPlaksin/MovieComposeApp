@@ -12,6 +12,7 @@ fun MovieDetailsDto.toMovieDetails(): MovieDetails {
         isAdult = adult,
         title = title,
         posterPath = BASE_IMAGE_URL + poster_path,
+        backgroundImagePath = BASE_IMAGE_URL + backdrop_path,
         genres = genres.map { it.name },
         homepage = homepage,
         overview = overview,

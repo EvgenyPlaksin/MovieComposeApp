@@ -5,6 +5,7 @@ data class MovieDetails(
     val isAdult: Boolean,
     val title: String,
     val posterPath: String,
+    val backgroundImagePath: String,
     val genres: List<String>,
     val homepage: String,
     val overview: String,
