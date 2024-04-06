@@ -6,10 +6,14 @@ import javax.inject.Inject
 
 class SaveMovieUseCase @Inject constructor(
     private val localRepository: LocalRepository
-){
+) {
 
     suspend operator fun invoke(movieList: MovieList) {
-        localRepository.insertMovieList(movieList)
+        try {
+            localRepository.insertMovieList(movieList)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

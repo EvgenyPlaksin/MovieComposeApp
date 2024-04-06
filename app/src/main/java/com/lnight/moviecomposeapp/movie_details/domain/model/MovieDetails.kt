@@ -1,8 +1,12 @@
 package com.lnight.moviecomposeapp.movie_details.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.LocalDate
 
+@Entity
 data class MovieDetails(
+    @PrimaryKey
     val id: Int,
     val isAdult: Boolean,
     val title: String,
