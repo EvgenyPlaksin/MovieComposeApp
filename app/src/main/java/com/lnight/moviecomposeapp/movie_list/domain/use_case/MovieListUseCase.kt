@@ -20,7 +20,7 @@ class MovieListUseCase @Inject constructor(
         } catch (e: HttpException) {
             Resource.Error(e.localizedMessage ?: "An unexpected error occurred")
         } catch (e: IOException) {
-            Resource.Error("Couldn't reach server, check your internet connection")
+            Resource.Error("Couldn't reach the server, check your internet connection")
         }
     }
 

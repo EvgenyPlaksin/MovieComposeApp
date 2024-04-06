@@ -5,10 +5,7 @@ import com.lnight.moviecomposeapp.movie_details.data.data_source.remote.dto.Movi
 import com.lnight.moviecomposeapp.movie_details.data.data_source.remote.dto.ProductionCompany
 import com.lnight.moviecomposeapp.movie_details.domain.model.Company
 import com.lnight.moviecomposeapp.movie_details.domain.model.MovieDetails
-import java.sql.Date
-import java.sql.Time
 import java.time.LocalDate
-import java.time.LocalTime
 
 fun MovieDetailsDto.toMovieDetails(): MovieDetails {
     return MovieDetails(
