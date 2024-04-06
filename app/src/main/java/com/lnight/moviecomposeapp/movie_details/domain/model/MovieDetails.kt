@@ -1,5 +1,7 @@
 package com.lnight.moviecomposeapp.movie_details.domain.model
 
+import java.time.LocalDate
+
 data class MovieDetails(
     val id: Int,
     val isAdult: Boolean,
@@ -10,5 +12,6 @@ data class MovieDetails(
     val homepage: String,
     val overview: String,
     val productionCompanies: List<Company>,
-    val status: String
+    val duration: Int,
+    val releaseDate: LocalDate
 )

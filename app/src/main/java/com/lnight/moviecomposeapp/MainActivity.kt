@@ -3,21 +3,29 @@ package com.lnight.moviecomposeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lnight.moviecomposeapp.common.Screen
 import com.lnight.moviecomposeapp.movie_details.presentation.components.MovieDetailsScreen
+import com.lnight.moviecomposeapp.movie_list.presentation.MovieListViewModel
 import com.lnight.moviecomposeapp.movie_list.presentation.components.MovieListScreen
 import com.lnight.moviecomposeapp.ui.theme.MovieComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,14 +34,29 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(
+            window,
+            false
+        )
         setContent {
             MovieComposeAppTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val systemUiController = rememberSystemUiController()
+                    val darkColors = !isSystemInDarkTheme()
+
+                    SideEffect {
+                        systemUiController.setSystemBarsColor(
+                            Color.Transparent,
+                            darkColors
+                        )
+                    }
                     val navController = rememberNavController()
                     val windowInfo = rememberWindowInfo()
+
+                    val movieListViewModel: MovieListViewModel by viewModels()
 
                     NavHost(
                         navController = navController,
@@ -41,7 +64,8 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Screen.ListScreen.route) {
                             MovieListScreen(
-                                navController = navController
+                                navController = navController,
+                                viewModel = movieListViewModel
                             )
                         }
                         composable(

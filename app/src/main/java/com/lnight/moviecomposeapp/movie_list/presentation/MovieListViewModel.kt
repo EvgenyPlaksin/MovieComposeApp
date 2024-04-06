@@ -1,5 +1,6 @@
 package com.lnight.moviecomposeapp.movie_list.presentation
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class MovieListViewModel @Inject constructor(
     val state: State<MovieListState> = _state
 
     init {
+        Log.e("TAG", "init 1")
         getSavedMovies()
     }
 
@@ -75,6 +77,7 @@ class MovieListViewModel @Inject constructor(
     )
 
     init {
+        Log.e("TAG", "here 3")
         getMovieList()
     }
 

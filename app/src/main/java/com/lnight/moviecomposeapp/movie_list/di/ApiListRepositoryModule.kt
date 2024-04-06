@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class ApiRepositoryModule {
+abstract class ApiListRepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindApiRepository(
+    abstract fun bindApiListRepository(
         repositoryImpl: ApiRepositoryImpl
     ): ApiRepository
 

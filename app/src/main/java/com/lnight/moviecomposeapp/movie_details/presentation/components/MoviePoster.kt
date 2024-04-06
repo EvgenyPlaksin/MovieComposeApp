@@ -1,10 +1,18 @@
 package com.lnight.moviecomposeapp.movie_details.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +37,7 @@ fun MoviePoster(
     posterPath: String,
     backgroundImagePath: String,
     name: String,
+    onHomePageClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -60,10 +69,32 @@ fun MoviePoster(
                 color = Color.Black,
                 BlendMode.Lighten
             ),
+            error = {
+               Box(
+                   modifier = Modifier
+                       .fillMaxSize()
+                       .background(MaterialTheme.colorScheme.surfaceVariant)
+               )
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .fadingEdge(bottomFade)
         )
+        IconButton(
+            onClick = onHomePageClick,
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(horizontal = 14.dp, vertical = 34.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.OpenInBrowser,
+                contentDescription = "Open in browser"
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxHeight(0.8f)
@@ -72,13 +103,21 @@ fun MoviePoster(
             SubcomposeAsyncImage(
                 model = posterImageRequest,
                 contentDescription = name,
+                error = {
+                    Icon(
+                        imageVector = Icons.Default.Error,
+                        contentDescription = "Error",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 loading = {
                     CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .scale(0.5f)
                     )
-                }
+                },
+                modifier = Modifier.fillMaxHeight()
             )
         }
     }

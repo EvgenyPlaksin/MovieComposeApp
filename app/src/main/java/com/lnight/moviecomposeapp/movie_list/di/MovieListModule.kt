@@ -20,7 +20,7 @@ object MovieListModule {
 
     @Provides
     @Singleton
-    fun provideMoviesApi(): MovieListApi {
+    fun provideMovieListApi(): MovieListApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())

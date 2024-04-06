@@ -34,6 +34,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -77,6 +78,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.google.accompanist.systemuicontroller)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
@@ -103,4 +106,7 @@ dependencies {
 
     // Kotlix Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Desugaring
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

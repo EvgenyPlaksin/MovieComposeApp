@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LocalRepositoryModule {
+abstract class LocalListRepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindLocalRepository(
+    abstract fun bindLocalListRepository(
         repositoryImpl: LocalRepositoryImpl
     ): LocalRepository
 

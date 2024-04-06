@@ -1,5 +1,6 @@
 package com.lnight.moviecomposeapp.movie_list.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.lnight.moviecomposeapp.common.RetrySection
 import com.lnight.moviecomposeapp.common.Screen
@@ -24,9 +24,9 @@ import com.lnight.moviecomposeapp.movie_list.presentation.MovieListViewModel
 
 @Composable
 fun MovieListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: MovieListViewModel
 ) {
-    val viewModel: MovieListViewModel = hiltViewModel()
     val state by viewModel.state
 
     if (state.isLoading && state.movieList?.results.isNullOrEmpty()) {
@@ -44,6 +44,7 @@ fun MovieListScreen(
             RetrySection(
                 text = state.error,
                 onClick = {
+                    Log.e("TAG", "here 2")
                     viewModel.getMovieList()
                 }
             )
@@ -54,6 +55,7 @@ fun MovieListScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             SearchBar(
                 text = state.searchText,
                 placeHolder = "Search...",
@@ -71,6 +73,7 @@ fun MovieListScreen(
                 state.movieList?.let { movieList ->
                     items(movieList.results.toList()) { movie ->
                         if (movie.id == movieList.results.last().id && !state.endReached && !state.isLoading) {
+                            Log.e("TAG", "here")
                             viewModel.getMovieList()
                         }
                         MovieListItem(movie = movie) {

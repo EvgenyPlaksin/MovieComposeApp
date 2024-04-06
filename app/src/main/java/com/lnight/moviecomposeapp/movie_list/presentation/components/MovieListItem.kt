@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.lnight.moviecomposeapp.movie_list.domain.model.Movie
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MovieListItem(
@@ -47,6 +52,13 @@ fun MovieListItem(
         SubcomposeAsyncImage(
             model = request,
             contentDescription = "Movie poster",
+            error = {
+                Icon(
+                    imageVector = Icons.Default.Error,
+                    contentDescription = "Error",
+                    tint = MaterialTheme.colorScheme.onSecondary
+                )
+            },
             loading = {
                 CircularProgressIndicator(
                     color = MaterialTheme.colorScheme.primary,
@@ -69,8 +81,11 @@ fun MovieListItem(
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 16.sp
             )
+
+            val date = LocalDate.parse(movie.releaseDate)
+                .format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
             Text(
-                text = "• Release date: ${movie.releaseDate}",
+                text = "• Release date: $date",
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 16.sp
             )

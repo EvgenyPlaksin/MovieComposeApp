@@ -5,6 +5,10 @@ import com.lnight.moviecomposeapp.movie_details.data.data_source.remote.dto.Movi
 import com.lnight.moviecomposeapp.movie_details.data.data_source.remote.dto.ProductionCompany
 import com.lnight.moviecomposeapp.movie_details.domain.model.Company
 import com.lnight.moviecomposeapp.movie_details.domain.model.MovieDetails
+import java.sql.Date
+import java.sql.Time
+import java.time.LocalDate
+import java.time.LocalTime
 
 fun MovieDetailsDto.toMovieDetails(): MovieDetails {
     return MovieDetails(
@@ -17,7 +21,8 @@ fun MovieDetailsDto.toMovieDetails(): MovieDetails {
         homepage = homepage,
         overview = overview,
         productionCompanies = production_companies.map { it.toCompany() },
-        status = status
+        duration = runtime,
+        releaseDate = LocalDate.parse(release_date)
     )
 }
 
