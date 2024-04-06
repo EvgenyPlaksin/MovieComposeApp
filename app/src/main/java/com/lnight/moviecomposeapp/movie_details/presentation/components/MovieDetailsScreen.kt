@@ -42,9 +42,7 @@ import com.lnight.moviecomposeapp.movie_details.presentation.MovieDetailsViewMod
 
 
 @Composable
-fun MovieDetailsScreen(
-    isCompactScreen: Boolean
-) {
+fun MovieDetailsScreen() {
     val viewModel: MovieDetailsViewModel = hiltViewModel()
     val state by viewModel.state
 

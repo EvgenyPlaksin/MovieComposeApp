@@ -70,11 +70,11 @@ fun MoviePoster(
                 BlendMode.Lighten
             ),
             error = {
-               Box(
-                   modifier = Modifier
-                       .fillMaxSize()
-                       .background(MaterialTheme.colorScheme.surfaceVariant)
-               )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                )
             },
             modifier = Modifier
                 .fillMaxSize()
